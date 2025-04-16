@@ -14,6 +14,9 @@ This is the project salon appointment booking system. Springboot, MySQL server, 
 ![image](https://github.com/user-attachments/assets/63aa905e-262e-401c-9d2f-8154c2be6f62)
 
 
+## Demo Video
+
+
 
 
 

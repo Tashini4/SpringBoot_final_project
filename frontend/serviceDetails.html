@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/css.css">
+    <style>
+        :root{
+            --main-color:#d7c7ae;
+            --primary-color:#8a6d46;
+            --hover:#5a4d3e;
+            --white:#fff;
+            --light-bg:#f3efec;
+            --dark-bg:rgba(0,0,0,.7);
+            --border:.1rem solid #aaa;
+            --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+        }
+        *{
+            font-family: 'Playfair Display',sans-serif;
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            transition: all .2s linear;
+        }
+        html{
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+        }
+        html::-webkit-scrollbar{
+            width: .6rem;
+        }
+        html::-webkit-scrollbar-track{
+            background-color: var(--white);
+        }
+        html::-webkit-scrollbar-thumb{
+            background-color: var(--primary-color);
+        }
+        section{
+            padding: 5rem 7%;
+        }
+        .heading{
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: capitalize;
+            margin-bottom: 3rem;
+            margin-top: 3rem;
+            font-size: 4rem;
+        }
+        .btn{
+            margin-top: 1rem;
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 1rem 3rem;
+        }
+        .btn:hover{
+            background: var(--hover);
+        }
+
+        /* header */
+        .header{
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            left: 0; right: 0;
+            background: var(--main-color);
+            z-index: 1000;
+        }
+        .header .logo{
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar #close-navbar{
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 4rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+        .header .navbar a{
+            font-size: 2rem;
+            margin-left: 2rem;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar a:hover{
+            padding-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        #menu-btn{
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+        /* header end */
+
+
+        /* home */
+        .home{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Added to center content horizontally */
+            text-align: center; /* Added to center text */
+            background: url("image/background2.png");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+        }
+        .home .content{
+            max-width: 60rem;
+            position: relative; /* Ensure content stays above overlay */
+            z-index: 1;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1); /* Slight background for better readability */
+            backdrop-filter: blur(5px); /* Blur effect for modern browsers */
+            border-radius: 10px;
+        }
+        .home .content span{
+            font-size: 3rem;
+            letter-spacing: .5rem;
+            padding-bottom: .5rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .home .content h3{
+            color: white;
+            font-size: 6rem; /* Slightly reduced for better proportion */
+            line-height: 1.2; /* Better line height */
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        /* home end */
+
+        /* Service Detail Cards */
+        .service-detail-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            height: 100%;
+            background: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .service-detail-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-detail-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h4 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-content p {
+            font-size: 1.6rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 1.6rem;
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .duration {
+            color: #666;
+        }
+
+        .service-content .btn {
+            font-size: 1.6rem;
+            padding: 0.8rem 2rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .testimonial-rating {
+            color: var(--primary-color);
+        }
+
+        /* Services section */
+        #hair-services, #skincare-services, #nail-services {
+            padding: 5rem 7%;
+        }
+
+        #hair-services h3, #skincare-services h3, #nail-services h3 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        #hair-services h3::after, #skincare-services h3::after, #nail-services h3::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 1rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .home .content h3 {
+                font-size: 4.5rem; /* Smaller font size for mobile */
+            }
+            .home .content span {
+                font-size: 2rem;
+            }
+
+            .service-content h4 {
+                font-size: 1.8rem;
+            }
+
+            .service-content p, .service-meta {
+                font-size: 1.4rem;
+            }
+        }
+        /*footer*/
+        .footer{
+            background-color: var(--main-color);
+            text-align: center;
+        }
+        .footer .box-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(30rem,1fr));
+            gap: 2rem;
+        }
+        .footer .box-container .box h3{
+            font-size: 2.2rem;
+            text-transform: capitalize;
+            color: var(--primary-color);
+            padding: 1rem 0;
+        }
+        .footer .box-container .box p{
+            font-size: 1.5rem;
+            line-height: 2;
+            color: black;
+            padding: 1rem 0;
+        }
+        .footer .box-container .box .share{
+            margin-top: 1rem;
+        }
+        .footer .box-container .box .share a{
+            height: 4.5rem;
+            width: 4.5rem;
+            line-height:4.5rem ;
+            border-radius: 50%;
+            font-size: 1.7rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            margin-right: .3rem;
+            text-align: center;
+        }
+        .footer .box-container .box .share a:hover{
+            background: black;
+        }
+        .footer .box-container .box .link{
+            font-size: 1.7rem;
+            line-height: 2;
+            color: var(--primary-color);
+            padding: .5rem 0;
+            display: block;
+            text-decoration: underline;
+        }
+        .footer .box-container .box .link:hover{
+            color: black;
+        }
+        .footer .credit{
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            font-size: 2rem;
+            text-transform: capitalize;
+            color: #444;
+            border-top: 0.1rem solid var(--primary-color);
+        }
+        .footer .credit span{
+            color: var(--primary-color);
+        }
+        /*footer end*/
+
+    </style>
+</head>
+<body>
+<!--header-->
+<section class="header">
+    <a href="#" class="logo">Beauty</a>
+
+    <nav class="navbar">
+        <div id="close-navbar" class="fas fa-times"></div>
+
+        <a href="index.html">Home</a>
+        <a href="index.html">About</a>
+        <a href="#services">Services</a>
+        <a href="#">Pricing</a>
+        <a href="#">Blogs</a>
+        <a class="btn btn-warning ms-3" href="login.html">Get Started</a>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+</section>
+<!--header-->
+
+<!--home-->
+<section class="home" id="home">
+    <div class="content">
+        <h3>Service Details</h3>
+    </div>
+</section>
+
+<!-- Detailed Services -->
+<section id="services">
+    <div class="mt-5 pt-5" id="hair-services">
+        <h3 class="mb-4">Hair Services</h3>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="../../Practice12/uploads/blog2.png" alt="Haircut">
+                    </div>
+                    <div class="service-content">
+                        <h4>Haircut & Styling</h4>
+                        <p>Precision cuts tailored to your face shape and lifestyle.</p>
+                        <div class="service-meta">
+                            <span class="price">$60+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 45-60 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="../../Practice12/uploads/blog1.png" alt="Hair Color">
+                    </div>
+                    <div class="service-content">
+                        <h4>Hair Coloring</h4>
+                        <p>From natural tones to vibrant fashion colors with premium products.</p>
+                        <div class="service-meta">
+                            <span class="price">$90+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 2-3 hours</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35" alt="Keratin Treatment">
+                    </div>
+                    <div class="service-content">
+                        <h4>Keratin Treatment</h4>
+                        <p>Smoothing treatment for frizz-free, shiny hair that lasts weeks.</p>
+                        <div class="service-meta">
+                            <span class="price">$250+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 3-4 hours</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 pt-5" id="skincare-services">
+        <h3 class="mb-4">Skincare Services</h3>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881" alt="Facial Treatment">
+                    </div>
+                    <div class="service-content">
+                        <h4>Signature Facial</h4>
+                        <p>Deep cleansing, exfoliation, and hydration for radiant skin.</p>
+                        <div class="service-meta">
+                            <span class="price">$85+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874" alt="Chemical Peel">
+                    </div>
+                    <div class="service-content">
+                        <h4>Chemical Peel</h4>
+                        <p>Professional peel to improve skin texture and reduce imperfections.</p>
+                        <div class="service-meta">
+                            <span class="price">$120+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 45-90 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881" alt="Microdermabrasion">
+                    </div>
+                    <div class="service-content">
+                        <h4>Microdermabrasion</h4>
+                        <p>Exfoliating treatment that rejuvenates the skin's appearance.</p>
+                        <div class="service-meta">
+                            <span class="price">$110+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 pt-5" id="nail-services">
+        <h3 class="mb-4">Nail Services</h3>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="image/img_8.png" alt="Manicure">
+                    </div>
+                    <div class="service-content">
+                        <h4>Luxury Manicure</h4>
+                        <p>Complete nail care with cuticle treatment, massage, and polish.</p>
+                        <div class="service-meta">
+                            <span class="price">$45+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 45 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="image/img_9.png" alt="Pedicure">
+                    </div>
+                    <div class="service-content">
+                        <h4>Spa Pedicure</h4>
+                        <p>Relaxing foot treatment with exfoliation and massage.</p>
+                        <div class="service-meta">
+                            <span class="price">$60+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 60 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="service-detail-card">
+                    <div class="service-img">
+                        <img src="image/img_10.png" alt="Gel Nails">
+                    </div>
+                    <div class="service-content">
+                        <h4>Gel Nail Extensions</h4>
+                        <p>Long-lasting gel polish with custom nail extensions.</p>
+                        <div class="service-meta">
+                            <span class="price">$75+</span>
+                            <span class="duration"><i class="far fa-clock"></i> 90 min</span>
+                        </div>
+                        <a href="booking.html" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--footer-->
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>find us here</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+        <div class="box">
+            <h3>contact us</h3>
+            <p>+94 78 341 5581</p>
+            <a href="#" class="link">nethushugh@gmail.com</a>
+        </div>
+        <div class="box">
+            <h3>localization</h3>
+            <p>230 Points of Pines Dr <br>
+                Colorado Springs <br>
+                United States</p>
+        </div>
+    </div>
+    <div class="credit">created by <span>Tashini</span> | all rights reserved!</div>
+</section>
+<!--footer-->
+<script src="js/lib/jquery-3.7.1.min.js"></script>
+<script src="js/serviceDetails.js"></script>
+
+</body>
+</html>

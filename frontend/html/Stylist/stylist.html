@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Stylist Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8a6dff;
+            --secondary-color: #ff6b9a;
+            --dark-color: #2a3042;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .stylist-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .stylist-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .stylist-img-container {
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stylist-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.5s ease;
+        }
+
+        .stylist-card:hover .stylist-img {
+            transform: scale(1.05);
+        }
+
+        .stylist-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 20px;
+            color: white;
+        }
+
+        .specialization-badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .availability-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .available {
+            background-color: var(--success-color);
+        }
+
+        .unavailable {
+            background-color: var(--danger-color);
+        }
+
+        .busy {
+            background-color: var(--warning-color);
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            display: none;
+            border-radius: var(--border-radius);
+            border: 1px solid #dee2e6;
+        }
+
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            background-color: rgba(138, 109, 255, 0.05);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(138, 109, 255, 0.1);
+        }
+
+        .upload-area i {
+            color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-color: #7a5cf0;
+            border-color: #7a5cf0;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(138, 109, 255, 0.25);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 0;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(138, 109, 255, 0.3);
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+        }
+
+        .action-buttons .btn {
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            color: var(--warning-color);
+            font-size: 0.9rem;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stats-card h5 {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .stats-card .count {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding-left: 40px;
+            border-radius: 8px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #adb5bd;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .stylist-img-container {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main Content -->
+<div class="container py-4">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <a href="../AdminDashboard/adminDashboard.html">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dashboardModal">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                </button>
+            </a>
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+                    <h1 class="display-5 fw-bold">Stylist Management</h1>
+                    <p class="lead">Manage your salon's talented team of beauty professionals</p>
+                </div>
+
+                <div class="col-md-4 text-md-end">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addStylistModal">
+                        <i class="fas fa-plus me-2"></i>Add New Stylist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h5>Total Stylists</h5>
+                <div class="count">24</div>
+                <small class="text-muted">+3 this month</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h5>Available Now</h5>
+                <div class="count">15</div>
+                <small class="text-muted">Ready for appointments</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h5>Top Rated</h5>
+                <div class="count">4.9 <small class="rating">★ ★ ★ ★ ★</small></div>
+                <small class="text-muted">Average rating</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h5>Specializations</h5>
+                <div class="count">6</div>
+                <small class="text-muted">Different services</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" class="form-control" placeholder="Search stylists by name, specialization...">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="filter-section">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="me-2">Filter:</span>
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option>All Stylists</option>
+                        <option>Available</option>
+                        <option>Hair Stylists</option>
+                        <option>Makeup Artists</option>
+                        <option>Top Rated</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stylist Cards Grid -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="stylistContainer">
+        <!-- Example Stylist Card 1 -->
+
+
+        <!-- More cards would be dynamically added here -->
+    </div>
+
+    <!-- No Stylists Message -->
+    <div class="row d-none" id="noStylistsMessage">
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-user-slash fa-4x text-muted mb-4"></i>
+            <h4 class="text-muted mb-3">No stylists added yet</h4>
+            <p class="mb-4">Start building your dream team by adding your first stylist</p>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStylistModal">
+                <i class="fas fa-plus me-2"></i>Add Your First Stylist
+            </button>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Add Stylist Modal -->
+<div class="modal fade" id="addStylistModal" tabindex="-1" aria-labelledby="addStylistModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStylistModalLabel">Add New Stylist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="stylistForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="fullName" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="fullName" required placeholder="Enter stylist's full name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" required placeholder="Enter professional email">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phoneNumber" class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" id="phoneNumber" required placeholder="Enter contact number">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="specialization" class="form-label">Specialization *</label>
+                            <select class="form-select" id="specialization" required>
+                                <option value="">Select specialization</option>
+                                <option value="Hair Stylist">Hair Stylist</option>
+                                <option value="Color Specialist">Color Specialist</option>
+                                <option value="Makeup Artist">Makeup Artist</option>
+                                <option value="Nail Technician">Nail Technician</option>
+                                <option value="Barber">Barber</option>
+                                <option value="Esthetician">Esthetician</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="availability" class="form-label">Availability *</label>
+                            <select class="form-select" id="availability" required>
+                                <option value="">Select availability</option>
+                                <option value="Available">Available</option>
+                                <option value="Busy">Busy (Limited bookings)</option>
+                                <option value="On Vacation">On Vacation</option>
+                                <option value="On Leave">On Leave</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Stylist Image *</label>
+                            <div class="upload-area" id="uploadArea" onclick="document.getElementById('imageUpload').click()">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                <p class="mb-1">Drag & drop your image here or click to browse</p>
+                                <p class="small text-muted">(Supports JPG, PNG up to 5MB)</p>
+                                <input type="file" id="imageUpload" accept="image/*" class="d-none" onchange="handleImageUpload(this)">
+                                <img id="imagePreview" class="image-preview" alt="Image preview">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveStylistBtn" onclick="saveStylist()">
+                    <i class="fas fa-save me-1"></i> Save Stylist
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Stylist Modal (Hidden by default) -->
+<div class="modal fade" id="viewStylistModal" tabindex="-1" aria-hidden="true">
+    <!-- This would be populated dynamically when viewing a stylist -->
+</div>
+
+
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../js/lib/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    getAllStylist();
+    function saveStylist() {
+        const token = localStorage.getItem('token');
+        const decodedToken = jwt_decode(token);
+        const userEmail = decodedToken.email;
+
+        const formData = new FormData();
+        const image = $('#imageUpload')[0].files[0];
+        if (image) {
+            formData.append('file',image);
+        }
+        const stylistDT0 = {
+            fullName: $("#fullName").val(),
+            email: $("#email").val(),
+            phoneNumber: $("#phoneNumber").val(),
+            specialization: $("#specialization").val(),
+            availability: $("#availability").val()
+
+        }
+        console.log(stylistDT0)
+        console.log("oooooooooooooooooooooooooooooooooooo")
+        formData.append('styleDTO', new Blob([JSON.stringify(stylistDT0)], {type: 'application/json '}));
+
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/stylists/saveStylist',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            success: function (response) {
+                console.log("tttttttttttttttttttttttttttttttttttttttt")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Stylist saved successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = 'stylist.html';
+                });
+            },
+            error: function (xhr, status, error) {
+                let errorMsg = error;
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error saving stylist',
+                    text: errorMsg
+                });
+            }
+        });
+    }
+    // Function to handle image upload preview
+    function handleImageUpload(input) {
+        const preview = document.getElementById('imagePreview');
+        const uploadArea = document.getElementById('uploadArea');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                uploadArea.querySelector('i').style.display = 'none';
+                uploadArea.querySelector('p').style.display = 'none';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function getAllStylist(){
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:8080/api/v1/stylists/getStylist',
+            async: true,
+            headers: {
+                'Authorization': 'Bearer '+ localStorage.getItem('token')
+            },
+            success: function(response) {
+                console.log("sssssssss"+response)
+                const stylists = response.data;
+                stylists.forEach(stylist => {
+                    const name = stylist.fullName;
+                    const email = stylist.email;
+                    const phone = stylist.phoneNumber;
+                    const fileName = stylist.fileName;
+                    const specialization = stylist.specialization;
+                    const availability = stylist.availability;
+
+                    $('#stylistContainer').append(`
+                            <div class="col">
+            <div class="card stylist-card">
+                <div class="stylist-img-container">
+                    <img src="../../../../uploads/${fileName}" class="stylist-img" alt="Stylist">
+                    <div class="stylist-overlay">
+                        <h5 class="mb-0">${name}</h5>
+                        <span class="specialization-badge">${specialization}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span><span class="availability-indicator available"></span> ${availability}</span>
+                        <div class="rating">★ ★ ★ ★ ★ (4.9)</div>
+                    </div>
+                    <p class="card-text text-muted mb-3">Expert in balayage, ombre, and creative color techniques with 8 years experience.</p>
+                    <div class="d-flex flex-wrap action-buttons">
+                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i> Edit</button>
+                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash me-1"></i> Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                    `)
+
+
+
+                })
+
+                }
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+</body>
+</html>

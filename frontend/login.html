@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe Salon - Staff Login</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --salon-brown: #8a6d46;
+            --salon-beige: #d7c7ae;
+            --salon-dark: #5a4d3e;
+        }
+
+        body {
+            background-color: #f8f5f0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(90, 77, 62, 0.1);
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .card-header {
+            background-color: var(--salon-brown);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-bottom: none;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--salon-beige);
+        }
+
+        .form-control:focus {
+            border-color: var(--salon-brown);
+            box-shadow: 0 0 0 0.25rem rgba(138, 109, 70, 0.25);
+        }
+
+        .input-group-text {
+            background-color: var(--salon-beige);
+            border: 1px solid var(--salon-beige);
+            color: var(--salon-dark);
+        }
+
+        .btn-login {
+            background-color: var(--salon-brown);
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: var(--salon-dark);
+            transform: translateY(-2px);
+        }
+
+        .forgot-link {
+            color: var(--salon-brown);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-link:hover {
+            color: var(--salon-dark);
+            text-decoration: underline;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--salon-dark);
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--salon-beige);
+        }
+
+        .divider::before {
+            margin-right: 10px;
+        }
+
+        .divider::after {
+            margin-left: 10px;
+        }
+
+        .btn-register {
+            background-color: white;
+            border: 1px solid var(--salon-brown);
+            color: var(--salon-brown);
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: var(--salon-beige);
+            color: var(--salon-dark);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="logo">BEAUTY</div>
+                <div class="tagline">Where Beauty Meets Elegance</div>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="UserEmail" id="loginName" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" placeholder="Password" id="loginPassword" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <button type="button" class="btn btn-login mb-3" onclick="login()">LOGIN</button>
+
+                    <div class="divider">or</div>
+
+                    <a href="register.html" class="btn btn-register">CREATE NEW ACCOUNT</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/lib/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

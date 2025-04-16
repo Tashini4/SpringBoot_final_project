@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Salon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <link rel="stylesheet" href="css/css.css">
+    <style>
+        /* Add these new styles to your css.css file */
+        .bg-light {
+            background-color: var(--light-bg);
+            padding: 5rem 7%;
+        }
+
+        .service-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-category {
+            background: var(--white);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .service-category:hover {
+            transform: translateY(-1rem);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-category h3 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: capitalize;
+        }
+
+        .service-category p {
+            font-size: 1.6rem;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .service-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 1.6rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            background: var(--hover);
+        }
+
+
+        /*.section-title:after {
+            content: '';
+            position: absolute;
+            width: 5rem;
+            height: 0.3rem;
+            background: var(--primary-color);
+            bottom: -0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }*/
+
+        .section-subtitle {
+            font-size: 1.8rem;
+            color:var(--primary-color);
+            margin-bottom: 3rem;
+        }
+        /* Stylists Section */
+        .stylist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stylist-card {
+            background: var(--white);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .stylist-card:hover {
+            transform: translateY(-0.5rem);
+        }
+
+        .stylist-card img {
+            width: 100%;
+            height: 30rem;
+            object-fit: cover;
+        }
+
+        .stylist-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stylist-info h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stylist-info p {
+            font-size: 1.6rem;
+            color: #444;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--hover);
+            transform: rotate(360deg);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-img {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 0.3rem solid var(--primary-color);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .testimonial-rating {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<section class="header">
+    <a href="#" class="logo">Beauty</a>
+
+    <nav class="navbar">
+        <div id="close-navbar" class="fas fa-times"></div>
+
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#blogs">Blogs</a>
+        <a class="btn btn-warning ms-3" href="login.html">Get Started</a>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+</section>
+<!--header-->
+
+<!--home-->
+<section class="home" id="home">
+    <div class="content">
+        <span>Welcome</span>
+        <h3>we make <br> hair beautiful <br> & unique</h3>
+        <a class="btn btn-warning ms-3" href="#booking">Book Now</a>
+    </div>
+</section>
+<!--home-->
+
+<!--about-->
+<section class="about" id="about">
+    <h1 class="heading">about us</h1>
+    <div class="row">
+        <div class="image">
+            <img src="image/img_1.png" alt="">
+        </div>
+        <div class="content">
+            <h3 class="title"> we are a group of stylist</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at corporis culpa excepturi exercitationem explicabo illo mollitia nesciunt, nisi provident quibusdam sapiente sed vel vitae.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto atque corporis delectus expedita facilis, fugit illum iste modi, molestiae nisi nulla, praesentium reiciendis sunt voluptatibus.</p>
+
+            <div class="icons-container">
+                <div class="icons">
+                    <img src="image/comb_processed.png" alt="">
+                    <h3>professional tools</h3>
+                </div>
+                <div class="icons">
+                    <img src="image/make_processed.png" alt="">
+                    <h3>quality tools</h3>
+                </div>
+                <div class="icons">
+                    <img src="image/hair%20spray_processed.png" alt="">
+                    <h3>hair washing</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--about-->
+
+<!-- New Services Section -->
+<section id="services" class="bg-light">
+    <div class="text-center">
+        <h2 class="heading">Our Services</h2>
+        <p class="section-subtitle">Premium beauty treatments for every need</p>
+    </div>
+    <div class="service-categories">
+        <div class="service-category">
+            <div class="service-icon">
+                <i class="fas fa-cut"></i>
+            </div>
+            <h3>Hair Services</h3>
+            <p>From precision cuts to vibrant coloring and luxurious treatments.</p>
+            <a href="serviceDetails.html" class="service-btn">View Details</a>
+        </div>
+        <div class="service-category">
+            <div class="service-icon">
+                <i class="fas fa-spa"></i>
+            </div>
+            <h3>Skin Care</h3>
+            <p>Rejuvenating facials and advanced skin treatments for radiant skin.</p>
+            <a href="serviceDetails.html" class="service-btn">View Details</a>
+        </div>
+        <div class="service-category">
+            <div class="service-icon">
+                <i class="fas fa-hand-sparkles"></i>
+            </div>
+            <h3>Nail Art</h3>
+            <p>Creative manicures, pedicures, and nail extensions with premium products.</p>
+            <a href="serviceDetails.html" class="service-btn">View Details</a>
+        </div>
+    </div>
+</section>
+<!-- End New Services Section -->
+
+<!-- Original services (renamed to premium-services) -->
+<section class="services" id="premium-services">
+    <h1 class="heading">premium services</h1>
+
+    <div class="box-container">
+        <div class="box">
+            <img src="image/hairstyle.png" alt="">
+            <div class="content">
+                <h3>hair styling</h3>
+            </div>
+        </div>
+        <div class="box">
+            <img src="image/weddingservice.png" alt="">
+            <div class="content">
+                <h3>wedding services</h3>
+            </div>
+        </div>
+        <div class="box">
+            <img src="image/manlyHaircut.png" alt="">
+            <div class="content">
+                <h3>manly haircut</h3>
+            </div>
+        </div>
+        <div class="box">
+            <img src="image/beard.png" alt="">
+            <div class="content">
+                <h3>beard trimming</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stylists Section -->
+<section id="stylists" class="bg-light">
+    <div class="text-center">
+        <h2 class="heading">Meet Our Stylists</h2>
+        <p class="section-subtitle">Certified professionals with years of experience</p>
+    </div>
+    <div class="stylist-container">
+        <div class="stylist-card">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df" alt="Stylist">
+            <div class="stylist-info">
+                <h3>Sarah Johnson</h3>
+                <p>Master Colorist</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="stylist-card">
+            <img src="https://images.unsplash.com/photo-1562788869-4ed32648eb72" alt="Stylist">
+            <div class="stylist-info">
+                <h3>Michael Chen</h3>
+                <p>Cutting Specialist</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="stylist-card">
+            <img src="image/img_11.png" alt="Stylist">
+            <div class="stylist-info">
+                <h3>Elena Rodriguez</h3>
+                <p>Skincare Expert</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="stylist-card">
+            <img src="image/img_12.png" alt="Stylist">
+            <div class="stylist-info">
+                <h3>Jessica Lee</h3>
+                <p>Nail Technician</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Rest of your existing HTML remains the same -->
+
+<!--pricing-->
+<section class="pricing" id="pricing">
+    <h1 class="heading">offer and pricing</h1>
+    <div class="box-container">
+        <div class="box">
+            <h3 class="title">basic</h3>
+            <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">10</span>
+            </div>
+            <ul>
+                <li><i class="fas fa-check"></i>simple haircut</li>
+                <li><i class="fas fa-check"></i>hair plugs</li>
+                <li><i class="fas fa-check"></i>styling</li>
+                <li><i class="fas fa-check"></i>braiding</li>
+            </ul>
+            <a href="#"><button>book a visit</button></a>
+        </div>
+        <div class="box">
+            <h3 class="title">standard</h3>
+            <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">20</span>
+            </div>
+            <ul>
+                <li><i class="fas fa-check"></i>simple haircut</li>
+                <li><i class="fas fa-check"></i>hair plugs</li>
+                <li><i class="fas fa-check"></i>styling</li>
+                <li><i class="fas fa-check"></i>braiding</li>
+            </ul>
+            <a href="#"><button>book a visit</button></a>
+        </div>
+        <div class="box">
+            <h3 class="title">premium</h3>
+            <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">30</span>
+            </div>
+            <ul>
+                <li><i class="fas fa-check"></i>simple haircut</li>
+                <li><i class="fas fa-check"></i>hair plugs</li>
+                <li><i class="fas fa-check"></i>styling</li>
+                <li><i class="fas fa-check"></i>braiding</li>
+            </ul>
+            <a href="#"><button>book a visit</button></a>
+        </div>
+    </div>
+</section>
+<!--pricing-->
+
+<!--blogs-->
+<section class="blogs" id="blogs">
+    <h1 class="heading">our blogs</h1>
+    <div class="box-container">
+        <div class="box">
+            <div class="image">
+                <img src="image/blog1.png" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="title">styling hair services</a>
+                <span>by admin / 31st january,2025</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ea eius illum labore
+                    maiores nostrum nulla possimus quam rem repellendus.</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="image">
+                <img src="image/blog2.png" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="title">styling hair services</a>
+                <span>by admin / 31st january,2025</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ea eius illum labore
+                    maiores nostrum nulla possimus quam rem repellendus.</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="image">
+                <img src="image/blog3.png" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="title">styling hair services</a>
+                <span>by admin / 31st january,2025</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ea eius illum labore
+                    maiores nostrum nulla possimus quam rem repellendus.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--blogs-->
+
+<!--reviews-->
+<section class="reviews" id="reviews">
+    <h1 class="heading">Customer's reviews</h1>
+
+    <div class="box-container">
+        <div class="box">
+            <img src="image/quote_processed.png" alt="quote" width="100px" height="100px">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At eius harum necessitatibus odio praesentium soluta suscipit, tempora voluptates! At culpa cumque obcaecati quam. Officia.</p>
+            <img src="image/img_7_processed.png" alt="">
+            <h3>derek rude</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+        <div class="box">
+            <img src="image/quote_processed.png" alt="quote" width="100px" height="100px">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At eius harum necessitatibus odio praesentium soluta suscipit, tempora voluptates! At culpa cumque obcaecati quam. Officia.</p>
+            <img src="image/img_6_processed.png" alt="" width="300px" height="300px">
+            <h3>jenny white</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+        <div class="box">
+            <img src="image/quote_processed.png" alt="quote" width="100px" height="100px">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At eius harum necessitatibus odio praesentium soluta suscipit, tempora voluptates! At culpa cumque obcaecati quam. Officia.</p>
+            <img src="image/img_5_processed.png" alt="">
+            <h3>kate mudton</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<!--reviews-->
+
+<!--footer-->
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>find us here</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+        <div class="box">
+            <h3>contact us</h3>
+            <p>+94 78 341 5581</p>
+            <a href="#" class="link">nethushugh@gmail.com</a>
+        </div>
+        <div class="box">
+            <h3>localization</h3>
+            <p>230 Points of Pines Dr <br>
+                Colorado Springs <br>
+                United States</p>
+        </div>
+    </div>
+    <div class="credit">created by <span>nethushugh</span> | all rights reserved!</div>
+</section>
+<!--footer-->
+<script src="js/lib/jquery-3.7.1.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

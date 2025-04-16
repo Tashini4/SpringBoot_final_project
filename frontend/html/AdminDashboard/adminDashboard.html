@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add this after your other CSS links -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 80px;
+            --transition-time: 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            transition: all var(--transition-time) ease;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        #sidebar.collapsed .sidebar-link-text {
+            display: none;
+        }
+
+        #sidebar.collapsed .logo-text {
+            display: none;
+        }
+
+        #sidebar.collapsed .sidebar-header {
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-time) ease;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 3px solid white;
+        }
+
+        .sidebar-link i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-link-text {
+            white-space: nowrap;
+        }
+
+        /* Main content area */
+        #main-content {
+            margin-left: var(--sidebar-width);
+            transition: all var(--transition-time) ease;
+            padding: 20px;
+        }
+
+        #main-content.expanded {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        /* Toggle button */
+        #sidebar-toggle {
+            background: none;
+            border: none;
+            color: #6c757d;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #sidebar-toggle:hover {
+            color: #495057;
+        }
+
+        /* Search bar */
+        .search-bar {
+            position: relative;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            padding-left: 40px;
+            border-radius: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        /* User profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid #6a11cb;
+        }
+
+        /* Cards */
+        .dashboard-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        /* Chart container */
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Table */
+        .data-table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background-color: #6a11cb;
+            color: white;
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Notification and chat icons */
+        .nav-icon {
+            position: relative;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-icon:hover {
+            color: #495057;
+        }
+
+        .badge-notification {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.6rem;
+            padding: 3px 6px;
+        }
+
+        /* Date time display */
+        .datetime-display {
+            font-weight: 500;
+            color: #495057;
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+
+        /* Chat modal */
+        .chat-message {
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+
+        .chat-message-incoming {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+
+        .chat-message-outgoing {
+            background-color: #6a11cb;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar -->
+<div id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo-icon">
+            <i class="fas fa-cut"></i>
+        </div>
+        <div class="logo-text">Beauty</div>
+    </div>
+
+    <div class="sidebar-menu">
+        <a href="adminDashboard.html" class="sidebar-link active">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="sidebar-link-text">Dashboard</span>
+        </a>
+        <a href="../AdminAppointment/adminAppointment.html" class="sidebar-link">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="sidebar-link-text">Appointments</span>
+        </a>
+        <a href="../User/user.html" class="sidebar-link">
+            <i class="fas fa-users"></i>
+            <span class="sidebar-link-text">Clients</span>
+        </a>
+        <a href="../AdminService/adminService.html" class="sidebar-link">
+            <i class="fas fa-scissors"></i>
+            <span class="sidebar-link-text">Services</span>
+        </a>
+        <a href="../Stylist/stylist.html" class="sidebar-link">
+            <i class="fas fa-user-tie"></i>
+            <span class="sidebar-link-text">Stylist</span>
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-chart-line"></i>
+            <span class="sidebar-link-text">Reports</span>
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-cog"></i>
+            <span class="sidebar-link-text">Settings</span>
+        </a>
+        <a href="#" class="sidebar-link" id="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="sidebar-link-text">Logout</span>
+        </a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div id="main-content">
+    <!-- Top Navigation -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <button id="sidebar-toggle" class="btn">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="d-flex align-items-center">
+            <!-- Local Date and Time Display -->
+            <div class="datetime-display" id="currentDateTime">
+                <i class="fas fa-clock me-2"></i>
+                <span id="dateTimeText">Loading...</span>
+            </div>
+
+            <div class="search-bar me-3">
+                <i class="fas fa-search"></i>
+                <input type="text" class="form-control" placeholder="Search...">
+            </div>
+
+            <!-- Notification Icon with Dropdown -->
+            <div class="nav-icon dropdown">
+                <i class="fas fa-bell dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <span class="badge bg-danger badge-notification">3</span>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                    <li><h6 class="dropdown-header">Notifications</h6></li>
+                    <li><a class="dropdown-item" href="#"><small>New appointment from Sarah Johnson</small></a></li>
+                    <li><a class="dropdown-item" href="#"><small>Michael Chen rescheduled</small></a></li>
+                    <li><a class="dropdown-item" href="#"><small>Inventory low on shampoo</small></a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-center" href="#">View All</a></li>
+                </ul>
+            </div>
+
+            <!-- Chat Icon with Modal Trigger -->
+            <div class="nav-icon">
+                <i class="fas fa-comment-dots" data-bs-toggle="modal" data-bs-target="#chatModal"></i>
+                <span class="badge bg-primary badge-notification">1</span>
+            </div>
+
+            <div class="user-profile">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="user-avatar">
+                <span class="d-none d-md-inline">Jessica Parker</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon text-primary">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h5 class="card-title">Today's Appointments</h5>
+                    <h2 class="mb-0">24</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon text-success">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h5 class="card-title">Today's Revenue</h5>
+                    <h2 class="mb-0">$1,850</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon text-warning">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <h5 class="card-title">New Clients</h5>
+                    <h2 class="mb-0">5</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon text-danger">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="card-title">Customer Rating</h5>
+                    <h2 class="mb-0">4.8</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart and Recent Appointments -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="chart-container">
+                <h5 class="mb-4">Revenue Overview</h5>
+                <canvas id="revenueChart" height="250"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="chart-container">
+                <h5 class="mb-4">Service Popularity</h5>
+                <canvas id="serviceChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Appointments Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="data-table">
+                <div class="p-3 border-bottom">
+                    <h5 class="mb-0">Recent Appointments</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Service</th>
+                            <th>Stylist</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                    Sarah Johnson
+                                </div>
+                            </td>
+                            <td>Hair Color</td>
+                            <td>Michael</td>
+                            <td>10:00 AM</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                    Robert Chen
+                                </div>
+                            </td>
+                            <td>Men's Cut</td>
+                            <td>Lisa</td>
+                            <td>11:30 AM</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                    Emily Wilson
+                                </div>
+                            </td>
+                            <td>Keratin Treatment</td>
+                            <td>Sophia</td>
+                            <td>1:00 PM</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                    Olivia Martinez
+                                </div>
+                            </td>
+                            <td>Balayage</td>
+                            <td>Michael</td>
+                            <td>2:30 PM</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                                    David Kim
+                                </div>
+                            </td>
+                            <td>Beard Trim</td>
+                            <td>Lisa</td>
+                            <td>4:00 PM</td>
+                            <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3 border-top text-end">
+                    <a href="#" class="btn btn-link">View All Appointments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chat Modal -->
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chatModalLabel">Customer Messages</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="chat-container">
+                    <div class="chat-message chat-message-incoming">
+                        <strong>Sarah Johnson</strong><br>
+                        Hi, I'd like to reschedule my appointment for tomorrow
+                    </div>
+                    <div class="chat-message chat-message-outgoing">
+                        <strong>You</strong><br>
+                        Sure, what time would work for you?
+                    </div>
+                    <div class="chat-message chat-message-incoming">
+                        <strong>Sarah Johnson</strong><br>
+                        How about 2pm instead of 10am?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Type your message...">
+                    <button class="btn btn-primary" type="button">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../js/lib/jquery-3.7.1.min.js"></script>
+<script src="adminDashboard.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        // Sidebar toggle functionality
+        $('#sidebar-toggle').click(function() {
+            $('#sidebar').toggleClass('collapsed');
+            $('#main-content').toggleClass('expanded');
+
+            // Change the icon based on sidebar state
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-bars"></i>');
+            } else {
+                $(this).html('<i class="fas fa-times"></i>');
+            }
+        });
+
+        // Update date and time display
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            $('#dateTimeText').text(now.toLocaleDateString('en-US', options));
+        }
+
+        // Update immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Initialize charts
+        function initializeCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [3500, 4200, 3800, 4500, 5200, 4800, 5500],
+                        backgroundColor: 'rgba(106, 17, 203, 0.1)',
+                        borderColor: 'rgba(106, 17, 203, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Service Popularity Chart
+            const serviceCtx = document.getElementById('serviceChart').getContext('2d');
+            const serviceChart = new Chart(serviceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Haircut', 'Coloring', 'Styling', 'Treatment', 'Extensions'],
+                    datasets: [{
+                        data: [35, 25, 15, 15, 10],
+                        backgroundColor: [
+                            'rgba(106, 17, 203, 0.8)',
+                            'rgba(37, 117, 252, 0.8)',
+                            'rgba(253, 126, 20, 0.8)',
+                            'rgba(25, 135, 84, 0.8)',
+                            'rgba(220, 53, 69, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Initialize charts when document is ready
+        initializeCharts();
+
+        // Logout button functionality with confirmation
+        $('#logout-btn').click(function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Logout?',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#6a11cb',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, logout',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Here you can add AJAX call if you have a logout endpoint
+                    // For now, we'll just clear storage and redirect
+                    localStorage.removeItem('token');
+                    sessionStorage.removeItem('user');
+
+                    // Show success message before redirecting
+                    Swal.fire({
+                        title: 'Logged Out',
+                        text: 'You have been successfully logged out.',
+                        icon: 'success',
+                        confirmButtonColor: '#6a11cb'
+                    }).then(() => {
+                        // Redirect to login page
+                        window.location.href = '../../../../Springboot_final_project/frontend/login.html';
+                    });
+                }
+            });
+        });
+
+        // Make table rows clickable (optional)
+        $('.table tbody tr').click(function() {
+            // You could implement a modal or redirect when a row is clicked
+            console.log('Row clicked:', $(this).find('td:first').text());
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{
+            --main-color:#d7c7ae;
+            --primary-color:#8a6d46;
+            --hover:#5a4d3e;
+            --white:#fff;
+            --light-bg:#f3efec;
+            --dark-bg:rgba(0,0,0,.7);
+            --border:.1rem solid #aaa;
+            --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+        }
+        *{
+            font-family: 'Playfair Display',sans-serif;
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            transition: all .2s linear;
+        }
+        html{
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+        }
+        html::-webkit-scrollbar{
+            width: .6rem;
+        }
+        html::-webkit-scrollbar-track{
+            background-color: var(--white);
+        }
+        html::-webkit-scrollbar-thumb{
+            background-color: var(--primary-color);
+        }
+        section{
+            padding: 5rem 7%;
+        }
+        .heading{
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: capitalize;
+            margin-bottom: 3rem;
+            margin-top: 3rem;
+            font-size: 4rem;
+        }
+        .btn{
+            margin-top: 1rem;
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 1rem 3rem;
+        }
+        .btn:hover{
+            background: var(--hover);
+        }
+
+        /* header */
+        .header{
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            left: 0; right: 0;
+            background: var(--main-color);
+            z-index: 1000;
+        }
+        .header .logo{
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar #close-navbar{
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 4rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+        .header .navbar a{
+            font-size: 2rem;
+            margin-left: 2rem;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar a:hover{
+            padding-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        #menu-btn{
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+        /* header end */
+
+
+        /* home */
+        .home{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Added to center content horizontally */
+            text-align: center; /* Added to center text */
+            background: url("image/background2.png");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+        }
+        .home .content{
+            max-width: 60rem;
+            position: relative; /* Ensure content stays above overlay */
+            z-index: 1;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1); /* Slight background for better readability */
+            backdrop-filter: blur(5px); /* Blur effect for modern browsers */
+            border-radius: 10px;
+        }
+        .home .content span{
+            font-size: 3rem;
+            letter-spacing: .5rem;
+            padding-bottom: .5rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .home .content h3{
+            color: white;
+            font-size: 6rem; /* Slightly reduced for better proportion */
+            line-height: 1.2; /* Better line height */
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .booking-section {
+            background-color: var(--light-bg);
+            padding: 5rem 0;
+        }
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .stylist-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #confirmation {
+            display: none;
+        }
+        :root{
+            --main-color:#d7c7ae;
+            --primary-color:#8a6d46;
+            --hover:#5a4d3e;
+            --white:#fff;
+            --light-bg:#f3efec;
+            --dark-bg:rgba(0,0,0,.7);
+            --border:.1rem solid #aaa;
+            --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+        }
+
+        html{
+            font-size: 70%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+        }
+        html::-webkit-scrollbar{
+            width: .6rem;
+        }
+        html::-webkit-scrollbar-track{
+            background-color: var(--white);
+        }
+        html::-webkit-scrollbar-thumb{
+            background-color: var(--primary-color);
+        }
+        section{
+            padding: 5rem 7%;
+        }
+        .heading{
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: capitalize;
+            margin-bottom: 3rem;
+            margin-top: 3rem;
+            font-size: 4rem;
+        }
+        .header{
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            left: 0; right: 0;
+            background: var(--main-color);
+            z-index: 1000;
+        }
+        .header .logo{
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar #close-navbar{
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 4rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+        .header .navbar a{
+            font-size: 2rem;
+            margin-left: 2rem;
+            color: black;
+            text-transform: capitalize;
+            text-decoration: none;
+        }
+        .header .navbar a:hover{
+            padding-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        #menu-btn{
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: black;
+            display: none;
+        }
+
+        .footer{
+            background-color: var(--main-color);
+            text-align: center;
+        }
+        .footer .box-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(30rem,1fr));
+            gap: 2rem;
+        }
+        .footer .box-container .box h3{
+            font-size: 2.2rem;
+            text-transform: capitalize;
+            color: var(--primary-color);
+            padding: 1rem 0;
+        }
+        .footer .box-container .box p{
+            font-size: 1.5rem;
+            line-height: 2;
+            color: black;
+            padding: 1rem 0;
+        }
+        .footer .box-container .box .share{
+            margin-top: 1rem;
+        }
+        .footer .box-container .box .share a{
+            height: 4.5rem;
+            width: 4.5rem;
+            line-height:4.5rem ;
+            border-radius: 50%;
+            font-size: 1.7rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            margin-right: .3rem;
+            text-align: center;
+        }
+        .footer .box-container .box .share a:hover{
+            background: black;
+        }
+        .footer .box-container .box .link{
+            font-size: 1.7rem;
+            line-height: 2;
+            color: var(--primary-color);
+            padding: .5rem 0;
+            display: block;
+            text-decoration: underline;
+        }
+        .footer .box-container .box .link:hover{
+            color: black;
+        }
+        .footer .credit{
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            font-size: 2rem;
+            text-transform: capitalize;
+            color: #444;
+            border-top: 0.1rem solid var(--primary-color);
+        }
+        .footer .credit span{
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+<section class="header">
+    <a href="#" class="logo">Beauty</a>
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#">About</a>
+        <a href="#services">Services</a>
+        <a href="#">Pricing</a>
+        <a href="#">Blogs</a>
+        <a class="btn btn-warning ms-3" href="login.html">Get Started</a>
+    </nav>
+</section>
+
+<section class="home" id="home">
+    <div class="content">
+        <h3>Appointment</h3>
+    </div>
+</section>
+
+<section class="booking-section">
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Book an Appointment</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%;">Step 1 of 4</div>
+                            </div>
+                        </div>
+
+                        <div id="step1">
+                            <h4 class="mb-4">Select Services</h4>
+                            <div class="row g-4" id="serviceContainer"></div>
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary disabled">Previous</button>
+                                <button class="btn btn-primary" onclick="nextStep(1)">Next</button>
+                            </div>
+                        </div>
+
+                        <div id="step2" style="display: none;">
+                            <h4 class="mb-4">Select Your Stylist</h4>
+                            <div class="row g-4" id="stylistContainer"></div>
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary" onclick="prevStep(2)">Previous</button>
+                                <button class="btn btn-primary" onclick="nextStep(2)">Next</button>
+                            </div>
+                        </div>
+
+                        <div id="step3" style="display: none;">
+                            <h4 class="mb-4">Select Date & Time</h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <h5>Choose a Date</h5>
+                                    <input type="date" class="form-control" id="appointmentDate" min="">
+                                    <div class="alert alert-info mt-2">
+                                        <i class="fas fa-info-circle me-2"></i>Open Monday-Saturday, 9AM-7PM
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Available Time Slots</h5>
+                                    <div id="timeSlots" class="d-flex flex-wrap">
+                                        <p class="text-muted">Please select a date first</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary" onclick="prevStep(3)">Previous</button>
+                                <button class="btn btn-primary" onclick="nextStep(3)">Next</button>
+                            </div>
+                        </div>
+
+                        <div id="step4" style="display: none;">
+                            <h4 class="mb-4">Your Information</h4>
+                            <form id="customerForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" id="phone" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Special Requests</label>
+                                        <textarea class="form-control" id="notes" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary" onclick="prevStep(4)">Previous</button>
+                                <button class="btn btn-primary" onclick="submitBooking()">Confirm Booking</button>
+                            </div>
+                        </div>
+
+                        <div id="confirmation" class="text-center py-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                            <h3 class="my-3">Appointment Confirmed!</h3>
+                            <div id="confirmationDetails" class="text-start mb-4 p-3 bg-light rounded"></div>
+                            <button class="btn btn-primary" onclick="window.location.reload()">Book Another</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>find us here</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+        <div class="box">
+            <h3>contact us</h3>
+            <p>+94 78 341 5581</p>
+            <a href="#" class="link">tashiniwijethunga@gmail.com</a>
+        </div>
+        <div class="box">
+            <h3>localization</h3>
+            <p>230 Points of Pines Dr <br>
+                Colorado Springs <br>
+                United States</p>
+        </div>
+    </div>
+    <div class="credit">created by <span>Tashini Madubhani</span> | all rights reserved!</div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/lib/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script>
+    let bookingData = {
+        service: null,
+        stylist: null,
+        date: null,
+        time: null,
+        customer: {}
+    };
+
+    $(document).ready(function() {
+        const today = new Date().toISOString().split('T')[0];
+        $('#appointmentDate').attr('min', today);
+        loadServices();
+        loadStylists();
+    });
+
+    function loadServices() {
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/service/getService',
+            headers: {'Authorization': 'Bearer '+ localStorage.getItem('token')},
+            success: function(response) {
+                response.data.forEach(service => {
+                    $('#serviceContainer').append(`
+                        <div class="col-md-4">
+                            <div class="card service-card" onclick="selectService(this,
+                                {id: '${service.serviceId}', name: '${service.serviceName}',
+                                price: ${service.servicePrice}, duration: ${service.duration}})">
+                                <div class="service-img">
+                                    <img src="../../Practice12/uploads/${service.fileName}" alt="${service.serviceName}">
+                                </div>
+                                <div class="p-3">
+                                    <h4>${service.serviceName}</h4>
+                                    <p>${service.serviceDescription}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold text-primary">Rs.${service.servicePrice}</span>
+                                        <span>${service.duration} mins</span>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-2">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+        });
+    }
+
+    function loadStylists() {
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/stylists/getStylist',
+            headers: {'Authorization': 'Bearer '+ localStorage.getItem('token')},
+            success: function(response) {
+                response.data.forEach(stylist => {
+                    $('#stylistContainer').append(`
+                        <div class="col-md-6">
+                            <div class="card stylist-card" onclick="selectStylist(this,
+                                {id: '${stylist.stylistId}', name: '${stylist.fullName}'})">
+                                <div class="card-body text-center">
+                                    <img src="../../Practice12/uploads/${stylist.fileName}" class="stylist-img mb-3">
+                                    <h5>${stylist.fullName}</h5>
+                                    <p class="text-muted">${stylist.specialization}</p>
+                                    <div class="d-flex justify-content-center">
+                                        <span class="badge bg-info me-2">Hair</span>
+                                        <span class="badge bg-info">Styling</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+        });
+    }
+
+    function selectService(card, service) {
+        $('.service-card').removeClass('selected');
+        $(card).addClass('selected');
+        bookingData.service = service;
+    }
+
+    function selectStylist(card, stylist) {
+        $('.stylist-card').removeClass('selected');
+        $(card).addClass('selected');
+        bookingData.stylist = stylist;
+    }
+
+    $('#appointmentDate').change(function() {
+        bookingData.date = this.value;
+        generateTimeSlots();
+    });
+
+    function generateTimeSlots() {
+        $('#timeSlots').empty();
+        for (let hour = 9; hour < 19; hour++) {
+            for (let minute = 0; minute < 60; minute += 30) {
+                if (hour === 18 && minute === 30) break;
+                const timeStr = `${hour}:${minute.toString().padStart(2,'0')}`;
+                const displayTime = `${hour > 12 ? hour-12 : hour}:${minute.toString().padStart(2,'0')} ${hour >= 12 ? 'PM' : 'AM'}`;
+                $('#timeSlots').append(`
+                    <button class="btn btn-outline-primary time-slot m-1"
+                        onclick="selectTime(this, '${timeStr}')">${displayTime}</button>
+                `);
+            }
+        }
+    }
+
+    function selectTime(btn, time) {
+        $('.time-slot').removeClass('active');
+        $(btn).addClass('active');
+        bookingData.time = time;
+    }
+
+    function nextStep(current) {
+        if (current === 1 && !bookingData.service) return alert('Please select a service');
+        if (current === 2 && !bookingData.stylist) return alert('Please select a stylist');
+        if (current === 3 && (!bookingData.date || !bookingData.time)) return alert('Please select date and time');
+
+        $(`#step${current}`).hide();
+        $(`#step${current+1}`).show();
+        $('.progress-bar').css('width', `${(current/4)*100}%`).text(`Step ${current} of 4`);
+    }
+
+    function prevStep(current) {
+        $(`#step${current}`).hide();
+        $(`#step${current-1}`).show();
+        $('.progress-bar').css('width', `${((current-2)/4)*100}%`).text(`Step ${current-1} of 4`);
+    }
+
+    function submitBooking() {
+        if (!$('#customerForm')[0].checkValidity()) return $('#customerForm')[0].reportValidity();
+
+        bookingData.customer = {
+            firstName: $('#firstName').val(),
+            lastName: $('#lastName').val(),
+            email: $('#email').val(),
+            phone: $('#phone').val(),
+            notes: $('#notes').val()
+        };
+ const token = localStorage.getItem("token");
+ const decorde = jwt_decode(token);
+ const email = decorde.email;
+        const date = new Date(bookingData.date);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        const [hours, mins] = bookingData.time.split(':');
+        const formattedTime = `${hours > 12 ? hours-12 : hours}:${mins} ${hours >= 12 ? 'PM' : 'AM'}`;
+        const sqlDate = date.toISOString().split('T')[0];
+
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/transaction/saveTransaction',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            },
+            data: JSON.stringify({
+                serviceId:bookingData.service.id,
+                stylistId:bookingData.stylist.id,
+                userEmail:email,
+                appointmentDate:sqlDate,
+                appointmentTime:formattedTime,
+            }),
+            success:function (){
+                alert("success")
+            }
+        })
+
+        $('#confirmationDetails').html(`
+            <p><strong>Service:</strong> ${bookingData.service.name}</p>
+            <p><strong>Stylist:</strong> ${bookingData.stylist.name}</p>
+            <p><strong>Date:</strong> ${formattedDate}</p>
+            <p><strong>Time:</strong> ${formattedTime}</p>
+            <p><strong>Customer:</strong> ${bookingData.customer.firstName} ${bookingData.customer.lastName}</p>
+            <p><strong>Contact:</strong> ${bookingData.customer.email}, ${bookingData.customer.phone}</p>
+            ${bookingData.customer.notes ? `<p><strong>Notes:</strong> ${bookingData.customer.notes}</p>` : ''}
+            <div class="alert alert-success mt-3">
+                Confirmation sent to ${bookingData.customer.email}
+            </div>
+        `);
+
+        $('#step4').hide();
+        $('#confirmation').show();
+        $('.progress-bar').css('width', '100%').text('Complete!');
+
+        console.log('Booking Data:', bookingData);
+    }
+</script>
+</body>
+</html>

@@ -66,7 +66,7 @@ function register() {
             "email": email,
             "name": `${firstname} ${lastname}`, // Combine first and last name
             "password": password,
-            "role": "admin"
+            "role": "user"
         }),
         success: function(response) {
        if(response.code ===  201){

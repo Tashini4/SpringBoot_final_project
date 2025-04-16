@@ -6,12 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-/**
- * Author: vishmee
- * Date: 4/15/25
- * Time: 1:29 AM
- * Description:
- */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

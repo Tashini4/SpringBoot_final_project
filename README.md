@@ -1,6 +1,6 @@
 # SpringBoot_final_project
 
-##Project Description
+## Project Description
 
 This is the project salon appointment booking system. Springboot, MySQL server, and Bootstrap are used for this.
 

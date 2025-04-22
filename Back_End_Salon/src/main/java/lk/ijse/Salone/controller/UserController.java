@@ -53,16 +53,15 @@ public class UserController {
       }
     }
 
-    @GetMapping("/getUser")
-    public ResponseEntity<ResponseDTO> getUser(@RequestParam String email) {
-        System.out.println("Get User Use " + email);
-        UserDTO userDTO = userService.searchUser(email);
-        System.out.println("ndsfisjdifsn"+userDTO.getUid());
-        if (userDTO == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                   .body(new ResponseDTO(VarList.Not_Found, "User Not Found", null));
+    @GetMapping("/getUsers")
+    public ResponseEntity<ResponseDTO> getAllUsers() {
+        try {
+            List<UserDTO> users = userService.getUsers();
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Success", users));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
-        return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Success", userDTO));
     }
 
     @PostMapping(value = "/register")

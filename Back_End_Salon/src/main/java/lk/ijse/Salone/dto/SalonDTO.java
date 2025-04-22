@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SalonDTO {
+public class  SalonDTO {
     private int serviceId;
     private String serviceName;
     private double servicePrice;

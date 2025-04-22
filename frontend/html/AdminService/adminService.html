@@ -8,68 +8,68 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         :root {
             --primary-color: #8e44ad;
-            --primary-light: #b27bc5;
-            --primary-dark: #6c3483;
-            --secondary-color: #f39c12;
+            --secondary-color: #9b59b6;
             --light-color: #f8f9fa;
             --dark-color: #343a40;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --info-color: #3498db;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
         }
 
         body {
-            background-color: #f8f9fa;
-            font-family: 'Poppins', sans-serif;
-            color: #495057;
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .sidebar {
-            background: white;
-            height: 100vh;
-            position: fixed;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            z-index: 1000;
-        }
-
-        .sidebar .nav-link {
-            color: #6c757d;
-            padding: 0.75rem 1.5rem;
-            margin: 0.25rem 0;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-        }
-
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            background-color: rgba(142, 68, 173, 0.1);
-            color: var(--primary-color);
-        }
-
-        .sidebar .nav-link i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .main-content {
-            margin-left: 250px;
-            padding: 30px;
-            transition: var(--transition);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .service-card {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .badge-custom {
+            background-color: #e8d6f5;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(142, 68, 173, 0.25);
+        }
+
+        .table th {
+            background-color: var(--primary-color);
+            color: white;
         }
 
         .page-header {
@@ -78,142 +78,32 @@
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #eee;
         }
 
         .page-title {
             color: var(--primary-color);
-            font-weight: 600;
             margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .page-title i {
-            margin-right: 10px;
-        }
-
-        .card {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: white;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 15px 20px;
-            font-weight: 600;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            padding: 8px 20px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-            border: none;
-        }
-
-        .table td {
-            vertical-align: middle;
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        .badge {
-            padding: 6px 10px;
-            font-weight: 500;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-
-        .badge-primary {
-            background-color: rgba(142, 68, 173, 0.1);
-            color: var(--primary-color);
         }
 
         .service-image {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
             border-radius: 5px;
-        }
-
-        .action-btn {
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: var(--transition);
-        }
-
-        .action-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .edit-btn {
-            color: var(--info-color);
-        }
-
-        .delete-btn {
-            color: var(--danger-color);
-        }
-
-        .modal-header {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .modal-title {
-            font-weight: 600;
-        }
-
-        .image-upload-container {
-            margin-bottom: 20px;
         }
 
         .image-preview {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: var(--border-radius);
+            border-radius: 5px;
             display: none;
             margin-bottom: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .image-upload-container {
+            margin-bottom: 15px;
         }
 
         .image-placeholder {
@@ -221,109 +111,32 @@
             height: 200px;
             background-color: #f8f9fa;
             border: 2px dashed #ddd;
-            border-radius: var(--border-radius);
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
             margin-bottom: 15px;
-            transition: var(--transition);
-        }
-
-        .image-placeholder:hover {
-            border-color: var(--primary-light);
-            background-color: rgba(142, 68, 173, 0.05);
         }
 
         .image-placeholder i {
             font-size: 3rem;
-            color: var(--primary-light);
+            color: #8e44ad;
             margin-bottom: 10px;
         }
 
         .image-placeholder p {
-            color: #6c757d;
+            color: #666;
             margin: 0;
-            font-size: 0.9rem;
-        }
-
-        .preview-thumbnail {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #eee;
-            cursor: pointer;
-        }
-
-        .preview-thumbnail:hover {
-            opacity: 0.8;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 0.25rem rgba(142, 68, 173, 0.25);
-        }
-
-        .section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title i {
-            margin-right: 10px;
-        }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
-            .sidebar .nav-link span {
-                display: none;
-            }
-            .sidebar .nav-link i {
-                margin-right: 0;
-                font-size: 1.2rem;
-            }
-            .main-content {
-                margin-left: 70px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 15px;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .page-header .btn {
-                margin-top: 15px;
-            }
         }
     </style>
 </head>
 <body>
-
-
 <!-- Main Content -->
 <div class="main-content">
     <div class="page-header">
-        <a href="../AdminDashboard/adminDashboard.html">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dashboardModal">
-                <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
-            </button>
-        </a>
-        <h1 class="page-title"><i class="fas fa-concierge-bell"></i> Service Management</h1>
+        <h1 class="page-title"><i class="fas fa-concierge-bell me-2"></i>Service Management</h1>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal">
             <i class="fas fa-plus me-2"></i>Add Service
         </button>
@@ -331,15 +144,13 @@
 
     <!-- Services Table -->
     <div class="card">
-        <div class="card-header">
-            <i class="fas fa-list me-2"></i> All Services
-        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Service Name</th>
                         <th>Description</th>
                         <th>Duration</th>
@@ -348,59 +159,12 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody id="servicesTableBody"></tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Haircut & Styling</td>
-                        <td>Professional haircut with styling</td>
-                        <td>45 min</td>
-                        <td>$45.00</td>
-                        <td><span class="badge badge-primary">Active</span></td>
-                        <td>
-                            <button class="btn btn-sm edit-btn action-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm delete-btn action-btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Deluxe Manicure</td>
-                        <td>Full manicure with polish</td>
-                        <td>30 min</td>
-                        <td>$35.00</td>
-                        <td><span class="badge badge-primary">Active</span></td>
-                        <td>
-                            <button class="btn btn-sm edit-btn action-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm delete-btn action-btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Signature Facial</td>
-                        <td>Deep cleansing facial treatment</td>
-                        <td>60 min</td>
-                        <td>$75.00</td>
-                        <td><span class="badge badge-primary">Active</span></td>
-                        <td>
-                            <button class="btn btn-sm edit-btn action-btn" data-bs-toggle="modal" data-bs-target="#serviceModal">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm delete-btn action-btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <tbody id="servicesTableBody">
+                    <!-- Services will be loaded here -->
+                    </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -408,71 +172,70 @@
 <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="serviceModalLabel"><i class="fas fa-concierge-bell me-2"></i> Add New Service</h5>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="serviceModalLabel">Add New Service</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="serviceForm">
                     <input type="hidden" id="serviceId">
-
                     <div class="image-upload-container">
-                        <h5 class="section-title"><i class="fas fa-images"></i> Service Images</h5>
-                        <div class="image-placeholder" onclick="document.getElementById('serviceImages').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload or drag and drop</p>
-                            <small class="text-muted">Upload service images (JPG/PNG, max 5MB each)</small>
+                        <img id="imagePreview" class="image-preview" alt="Service Image Preview">
+                        <div id="imagePlaceholder" class="image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>Click to upload service image</p>
                         </div>
-                        <input type="file" id="serviceImages" class="d-none" multiple accept="image/*" onchange="handleImageUpload(this)">
-                        <img id="imagePreview" class="image-preview" alt="Preview">
-                        <div class="d-flex flex-wrap mt-2" id="thumbnailContainer"></div>
+                        <input type="file" id="serviceImageUpload" accept="image/*" style="display: none;">
+                        <input type="hidden" id="serviceImage">
                     </div>
-
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="serviceName" class="form-label">Service Name *</label>
-                            <input type="text" class="form-control" id="serviceName" placeholder="Enter service name" required>
+                            <input type="text" class="form-control" id="serviceName" required>
                         </div>
-                        <div class="col-md-6">
-                            <label for="duration" class="form-label">Duration *</label>
-                            <div class="input-group">
-                                <select class="form-select" id="duration" required>
-                                    <option value="15">15 minutes</option>
-                                    <option value="30">30 minutes</option>
-                                    <option value="45">45 minutes</option>
-                                    <option value="60" selected>1 hour</option>
-                                    <option value="90">1.5 hours</option>
-                                    <option value="120">2 hours</option>
-                                    <option value="180">3 hours</option>
-                                </select>
-                                <span class="input-group-text">min</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="servicePrice" class="form-label">Price *</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="number" step="0.01" class="form-control" id="servicePrice" placeholder="0.00" required>
+                                <input type="number" step="0.01" class="form-control" id="servicePrice" required>
                             </div>
                         </div>
-
                     </div>
-
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="duration" class="form-label">Duration (minutes) *</label>
+                            <select class="form-select" id="duration" required>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="90">1.5 hours</option>
+                                <option value="120">2 hours</option>
+                                <option value="180">3 hours</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="serviceCategory" class="form-label">Category</label>
+                            <select class="form-select" id="serviceCategory">
+                                <option value="Hair">Hair Services</option>
+                                <option value="Nails">Nail Services</option>
+                                <option value="Skin">Skin Care</option>
+                                <option value="Makeup">Makeup</option>
+                                <option value="Waxing">Waxing</option>
+                                <option value="Massage">Massage</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="serviceDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="serviceDescription" rows="3" placeholder="Enter service description"></textarea>
+                        <textarea class="form-control" id="serviceDescription" rows="3"></textarea>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveServiceBtn" onclick="saveService()">
-                    <i class="fas fa-save me-2"></i>Save Service
-                </button>
+                <button type="button" class="btn btn-primary" id="saveServiceBtn">Save Service</button>
             </div>
         </div>
     </div>
@@ -483,7 +246,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i> Confirm Deletion</h5>
+                <h5 class="modal-title">Confirm Deletion</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -492,9 +255,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-                    <i class="fas fa-trash-alt me-2"></i>Delete
-                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
             </div>
         </div>
     </div>
@@ -502,50 +263,341 @@
 
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src ="adminService.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../../js/lib/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-
+<!-- JWT Decode -->
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 
 <script>
-    // Handle image upload and preview
-    function handleImageUpload(input) {
-        const preview = document.getElementById('imagePreview');
-        const thumbnailContainer = document.getElementById('thumbnailContainer');
+    // DOM elements
+    const servicesTableBody = document.getElementById('servicesTableBody');
+    const serviceForm = document.getElementById('serviceForm');
+    const saveServiceBtn = document.getElementById('saveServiceBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'));
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const imagePlaceholder = document.getElementById('imagePlaceholder');
+    const imagePreview = document.getElementById('imagePreview');
+    const serviceImageUpload = document.getElementById('serviceImageUpload');
+    const serviceImageInput = document.getElementById('serviceImage');
 
-        thumbnailContainer.innerHTML = '';
+    // Image upload handling
+    imagePlaceholder.addEventListener('click', () => {
+        serviceImageUpload.click();
+    });
 
-        if (input.files && input.files.length > 0) {
-            // Show first image as main preview
+    serviceImageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            }
-            reader.readAsDataURL(input.files[0]);
-
-            // Create thumbnails for all selected images
-            for (let i = 0; i < input.files.length; i++) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const thumbnail = document.createElement('img');
-                    thumbnail.src = e.target.result;
-                    thumbnail.className = 'preview-thumbnail';
-                    thumbnail.onclick = function() {
-                        preview.src = e.target.result;
-                    };
-                    thumbnailContainer.appendChild(thumbnail);
-                }
-                reader.readAsDataURL(input.files[i]);
-            }
-        } else {
-            preview.style.display = 'none';
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                imagePlaceholder.style.display = 'none';
+                serviceImageInput.value = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
+    });
+
+    // Load all services
+    // Load all services
+    function loadServices() {
+        const token = localStorage.getItem('token');
+
+        // Show loading state
+        servicesTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></td></tr>';
+
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/service/getService',
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function(response) {
+                // Check if response is an array
+                if (Array.isArray(response)) {
+                    if (response.length > 0) {
+                        renderServicesTable(response);
+                    } else {
+                        servicesTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4">No services found. Add your first service!</td></tr>';
+                    }
+                } else {
+                    console.error('Unexpected response format:', response);
+                    servicesTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Error loading services. Invalid data format.</td></tr>';
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading services:', error);
+                let errorMessage = 'Failed to fetch services. Please try again.';
+
+                if (xhr.status === 401) {
+                    errorMessage = 'Session expired. Please log in again.';
+                    // Redirect to login or handle unauthorized
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                servicesTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger">${errorMessage}</td></tr>`;
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error loading services',
+                    text: errorMessage
+                });
+            }
+        });
     }
 
+    // Enhanced renderServicesTable function
+    function renderServicesTable(services) {
+        servicesTableBody.innerHTML = '';
 
+        services.sort((a, b) => a.id - b.id).forEach(service => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${service.id}</td>
+            <td>
+                <img src="${service.serviceImage || 'https://via.placeholder.com/80?text=No+Image'}"
+                     alt="${service.serviceName}"
+                     class="service-image"
+                     onerror="this.src='https://via.placeholder.com/80?text=Image+Error'">
+            </td>
+            <td>
+                <strong>${service.serviceName}</strong>
+                <span class="badge badge-custom rounded-pill float-end">${service.category || 'General'}</span>
+            </td>
+            <td>${service.serviceDescription || 'N/A'}</td>
+            <td>${service.duration} min</td>
+            <td>$${service.servicePrice.toFixed(2)}</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>
+                <button class="btn btn-sm btn-outline-primary edit-service" data-id="${service.id}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-service" data-id="${service.id}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+            servicesTableBody.appendChild(row);
+        });
+
+        // Add event listeners to action buttons
+        addServiceButtonEventListeners();
+    }
+
+    // Helper function to add event listeners
+    function addServiceButtonEventListeners() {
+        // Edit buttons
+        document.querySelectorAll('.edit-service').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const serviceId = parseInt(e.currentTarget.getAttribute('data-id'));
+                editService(serviceId);
+            });
+        });
+
+        // Delete buttons
+        document.querySelectorAll('.delete-service').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const serviceId = parseInt(e.currentTarget.getAttribute('data-id'));
+                document.getElementById('deleteServiceId').value = serviceId;
+                deleteModal.show();
+            });
+        });
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+        // Check if user is authenticated
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Redirect to login or show error
+            Swal.fire({
+                icon: 'error',
+                title: 'Authentication required',
+                text: 'Please log in to access this page',
+                willClose: () => {
+                    window.location.href = '/login.html';
+                }
+            });
+            return;
+        }
+
+        // Load initial data
+        loadServices();
+
+        // Save service button click handler
+        saveServiceBtn.addEventListener('click', () => {
+            // Validate form before saving
+            if (!serviceForm.checkValidity()) {
+                serviceForm.classList.add('was-validated');
+                return;
+            }
+            saveService();
+        });
+    });
+
+    // Save service
+    function saveService() {
+        const token = localStorage.getItem('token');
+        const formData = new FormData();
+        const image = serviceImageUpload.files[0];
+
+        if (image) {
+            formData.append('file', image);
+        }
+
+        const salonDTO = {
+            id: document.getElementById('serviceId').value || null,
+            serviceName: document.getElementById('serviceName').value,
+            servicePrice: parseFloat(document.getElementById('servicePrice').value),
+            serviceDescription: document.getElementById('serviceDescription').value,
+            duration: parseInt(document.getElementById('duration').value),
+            category: document.getElementById('serviceCategory').value,
+            serviceImage: document.getElementById('serviceImage').value
+        };
+
+        formData.append('salonDTO', new Blob([JSON.stringify(salonDTO)], {type: 'application/json'}));
+
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/service/saveService',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Service saved successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    serviceModal.hide();
+                    serviceForm.reset();
+                    imagePreview.style.display = 'none';
+                    imagePlaceholder.style.display = 'flex';
+                    serviceImageInput.value = '';
+                    loadServices();
+                });
+            },
+            error: function(xhr, status, error) {
+                let errorMsg = error;
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error saving service',
+                    text: errorMsg
+                });
+            }
+        });
+    }
+
+    // Edit service
+    function editService(serviceId) {
+        const token = localStorage.getItem('token');
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/service/getServiceById/${serviceId}`,
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function(service) {
+                document.getElementById('serviceId').value = service.id;
+                document.getElementById('serviceName').value = service.serviceName;
+                document.getElementById('servicePrice').value = service.servicePrice;
+                document.getElementById('serviceDescription').value = service.serviceDescription;
+                document.getElementById('duration').value = service.duration;
+                document.getElementById('serviceCategory').value = service.category || 'Hair';
+
+                if (service.serviceImage) {
+                    imagePreview.src = service.serviceImage;
+                    imagePreview.style.display = 'block';
+                    imagePlaceholder.style.display = 'none';
+                    serviceImageInput.value = service.serviceImage;
+                } else {
+                    imagePreview.style.display = 'none';
+                    imagePlaceholder.style.display = 'flex';
+                    serviceImageInput.value = '';
+                }
+
+                document.getElementById('serviceModalLabel').textContent = 'Edit Service';
+                document.getElementById('saveServiceBtn').textContent = 'Update Service';
+                serviceModal.show();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error loading service',
+                    text: 'Failed to fetch service details. Please try again.'
+                });
+            }
+        });
+    }
+
+    // Delete service
+    function deleteService(serviceId) {
+        const token = localStorage.getItem('token');
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/service/deleteService/${serviceId}`,
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Service deleted successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    deleteModal.hide();
+                    loadServices();
+                });
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error deleting service',
+                    text: 'Failed to delete service. Please try again.'
+                });
+            }
+        });
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+        loadServices();
+
+        // Save service button click handler
+        saveServiceBtn.addEventListener('click', saveService);
+
+        // Confirm delete button click handler
+        confirmDeleteBtn.addEventListener('click', () => {
+            const serviceId = document.getElementById('deleteServiceId').value;
+            deleteService(serviceId);
+        });
+
+        // Reset modal when closed
+        document.getElementById('serviceModal').addEventListener('hidden.bs.modal', () => {
+            document.getElementById('serviceModalLabel').textContent = 'Add New Service';
+            document.getElementById('saveServiceBtn').textContent = 'Save Service';
+            document.getElementById('serviceId').value = '';
+            serviceForm.reset();
+            imagePreview.style.display = 'none';
+            imagePlaceholder.style.display = 'flex';
+            serviceImageInput.value = '';
+        });
+    });
 </script>
 </body>
 </html>

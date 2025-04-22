@@ -13,6 +13,7 @@ import java.util.Date;
 @Table(name = "appointments")
 public class Appointment {
     @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private int appointmentId;
 
     @ManyToOne
